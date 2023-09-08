@@ -9,9 +9,9 @@
         @click="$emit('onItemClick', index)"
       >
         {{ item.name }}
-        {{ 21321 }}
       </li>
     </ul>
+    111111
   </div>
 </template>
 

@@ -32,6 +32,8 @@
       >
         <m-svg-icon class="w-1.5 h-1.5" name="hamburger"></m-svg-icon>
       </li>
+
+      <!-- 弹出层 -->
       <m-popup v-model="isOpenPopup">
         <menu
           :categoryData="categoryData"
@@ -46,6 +48,7 @@
 <script setup>
 import { ref, watch, onBeforeUpdate } from 'vue'
 import { useScroll } from '@vueuse/core'
+
 import menu from '../menu/index.vue'
 
 defineProps({

@@ -18,6 +18,7 @@ const getCategoryData = async () => {
   const { categorys } = await getCategory()
   categoryData.value = categorys
   categoryData.value.unshift(ALL_CATEGORY_ITEM)
+  console.log(categoryData.value)
 }
 getCategoryData()
 </script>
