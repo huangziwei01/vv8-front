@@ -14,11 +14,14 @@
         class="block w-full h-[44px] pl-4 text-sm outline-0 bg-zinc-100 caret-zinc-400 rounded-xl text-zinc-900 tracking-wide font-semibold border border-zinc-100 duration-500 group-hover:bg-white group-hover:border-zinc-200 focus:border-red-300"
         type="text"
         placeholder="搜索"
+        v-model="inputValue"
       />
       <!-- 删除按钮 -->
       <m-svg-icon
         name="input-delete"
         class="h-1.5 w-1.5 absolute translate-y-[-50%] top-[50%] right-9 duration-500 cursor-pointer"
+        v-show="inputValue"
+        @click="onClearClick"
       ></m-svg-icon>
       <!-- 分割线 -->
       <div
@@ -26,9 +29,10 @@
       ></div>
       <!-- TODO: 搜索按钮(通用组件) -->
       <m-button
-        class="absolute translate-y-[-50%] top-[50%] right-1"
+        class="absolute translate-y-[-50%] top-[50%] right-1 rounded-xl duration-500 opacity-0 group-hover:opacity-100"
         icon="search"
         iconColor="#ffffff"
+        @click="onSearchHandlder"
       ></m-button>
     </div>
     <!-- 下拉区 -->
