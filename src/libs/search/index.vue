@@ -11,7 +11,7 @@
       />
       <!-- 输入框 -->
       <input
-        class="block w-full h-[44px] pl-4 text-sm outline-0 bg-zinc-100 caret-zinc-400 rounded-xl text-zinc-900 tracking-wide font-semibold border border-zinc-100 duration-500 group-hover:bg-white group-hover:border-zinc-200 focus:border-red-300"
+        class="block w-full h-[44px] pl-4 text-sm outline-0 bg-zinc-100 caret-zinc-400 rounded-xl text-zinc-900 tracking-wide font-semibold border border-zinc-100 duration-500 group-hover:bg-white group-hover:border-zinc-200 focus:border-red-300 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 dark:group-hover:bg-zinc-900... dark:group-hover:border-zinc-700"
         type="text"
         placeholder="搜索"
         v-model="inputValue"
@@ -38,7 +38,9 @@
     <!-- 下拉区 -->
     <transition name="slide">
       <div
-        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute z-20 left-0 top-[56px] p-2 rounded border border-zinc-200 duration-200 hover:shadow-3xl"
+        class="max-h-[368px] w-full text-base overflow-auto bg-white absolute z-20 left-0 top-[56px] p-2 rounded border border-zinc-200 duration-200 hover:shadow-3xl dark:bg-zinc-800 dark:border-zinc-600"
+        v-if="$slots.dropdown"
+        v-show="isFocus"
       >
         <slot name="dropdown" />
       </div>
@@ -46,7 +48,31 @@
   </div>
 </template>
 
-<script setup></script>
+<script>
+// 触发搜索（点击或回车）事件
+const EMIT_SEARCH = 'search'
+// 删除所有文本事件
+const EMIT_CLEAR = 'clear'
+// 输入事件
+const EMIT_INPUT = 'input'
+// 获取焦点事件
+const EMIT_FOCUS = 'focus'
+// 失去焦点事件
+const EMIT_BLUR = 'blur'
+</script>
+
+<script setup>
+import { ref } from 'vue'
+const inputValue = ref('')
+const onClearClick = () => {}
+const onSearchHandlder = () => {}
+const isFocus = ref(true)
+
+// $slots 插槽中的内容
+// 想要获取被填充到 slot 中的组件，就是用 defineSlots
+const slots = defineSlots()
+console.log(slots)
+</script>
 
 <style lang="scss" scoped>
 .slide-enter-active {
