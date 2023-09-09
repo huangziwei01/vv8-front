@@ -24,7 +24,7 @@
           'text-zinc-900 bg-zinc-200 dark:text-zinc-300 dark:bg-zinc-900':
             currentCategoryIndex === index
         }"
-        @click="onItemClick(index)"
+        @click="onItemClick(item, index)"
       >
         {{ item.name }}
       </li>
@@ -35,7 +35,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useCategoryStore } from '@/store/category'
+import { useAppStore } from '../../../../../store/app'
 const categoryStore = useCategoryStore()
+const appStore = useAppStore()
 const categoryData = computed(() => categoryStore.categoryData)
 
 /**
@@ -50,7 +52,9 @@ const triggerState = () => {
  * 选中状态处理
  */
 const currentCategoryIndex = ref(0)
-const onItemClick = (index) => {
+const onItemClick = (item, index) => {
+  // console.log(item)
+  appStore.changeCurrentCategory(item)
   currentCategoryIndex.value = index
 }
 </script>

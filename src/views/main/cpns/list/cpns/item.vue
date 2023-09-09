@@ -1,8 +1,11 @@
 <template>
-  <div
-    class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1 h-[280px] w-[230px]"
-  >
-    <div class="relative w-full rounded cursor-zoom-in group">
+  <div class="bg-white dark:bg-zinc-900 xl:dark:bg-zinc-800 rounded pb-1">
+    <div
+      class="relative w-full rounded cursor-zoom-in group"
+      :style="{
+        backgroundColor: randomRGB()
+      }"
+    >
       <!-- :src="data.photo" -->
       <img class="w-full rounded bg-transparent" :src="data.photo" />
       <!-- 遮罩层 -->
@@ -48,6 +51,7 @@
 </template>
 
 <script setup>
+import { randomRGB } from '@/utils/color.js'
 defineProps({
   data: {
     type: Object,

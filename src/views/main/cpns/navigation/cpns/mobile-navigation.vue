@@ -25,7 +25,7 @@
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :ref="setItemRef"
-        @click="onNavItemClick(index)"
+        @click="onNavItemClick(item, index)"
         :class="{
           'text-zinc-100 ': currentCategoryIndex === index
         }"
@@ -86,7 +86,8 @@ watch(currentCategoryIndex, (val) => {
   }
 })
 // item 点击事件
-const onNavItemClick = (index) => {
+const onNavItemClick = (item, index) => {
+  appStore.changeCurrentCategory(item)
   currentCategoryIndex.value = index
 }
 
