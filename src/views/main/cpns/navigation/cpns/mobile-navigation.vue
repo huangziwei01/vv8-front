@@ -46,6 +46,9 @@
 import { ref, watch, onBeforeUpdate } from 'vue'
 import { useScroll } from '@vueuse/core'
 
+import { useAppStore } from '@/store/app'
+const appStore = useAppStore()
+
 import menu from '../../menu/index.vue'
 
 defineProps({
