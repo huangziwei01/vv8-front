@@ -12,6 +12,6 @@
 <script setup>
 import headerVue from './cpns/header/index.vue'
 import mainVue from './cpns/main.vue'
-import floatingVue from './cpns/floating/index.vue'
+import floatingVue from '@/components/floating/index.vue'
 import {} from 'vue'
 </script>

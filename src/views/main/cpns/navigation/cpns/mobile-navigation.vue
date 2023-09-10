@@ -36,8 +36,10 @@
 
     <!-- 弹出层 -->
     <m-popup v-model="isOpenPopup">
-      <menu :categoryData="categoryData" @onItemClick="onMenuItemClick"></menu>
-      2312
+      <menu-vue
+        :categoryData="categoryData"
+        @onItemClick="onMenuItemClick"
+      ></menu-vue>
     </m-popup>
   </div>
 </template>
@@ -49,7 +51,7 @@ import { useScroll } from '@vueuse/core'
 import { useAppStore } from '@/store/app'
 const appStore = useAppStore()
 
-import menu from '../../menu/index.vue'
+import menuVue from '../../menu/index.vue'
 
 defineProps({
   categoryData: {

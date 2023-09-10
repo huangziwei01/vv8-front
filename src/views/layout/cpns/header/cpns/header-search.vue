@@ -24,11 +24,16 @@ import hintVue from './hint.vue'
 import history from './history.vue'
 
 import { useAppStore } from '@/store/app'
+import { useSearchStore } from '@/store/search'
 const appStore = useAppStore()
+const searchStore = useSearchStore()
 
 const inputValue = ref('')
 const onSearchHandler = (val) => {
   inputValue.value = val
   appStore.changeSearchText(val)
+  if (val) {
+    searchStore.addHistory(val)
+  }
 }
 </script>

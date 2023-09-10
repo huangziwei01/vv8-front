@@ -5,6 +5,7 @@ export const useSearchStore = defineStore('search', () => {
   const historys = ref([])
 
   const addHistory = (newHistory) => {
+    console.log('add')
     const isFindIndex = historys.value.findIndex((item) => item === newHistory)
     // 剔除旧数据
     if (isFindIndex !== -1) {

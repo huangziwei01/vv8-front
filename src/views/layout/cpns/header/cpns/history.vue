@@ -25,6 +25,7 @@
         ></m-svg-icon>
       </div>
     </div>
+    <confirm v-model="isShow" @confirm="deleteAllConfirm"></confirm>
   </div>
 </template>
 
@@ -33,21 +34,26 @@ const EMITS_ITEM_CLICK = 'itemClick'
 </script>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useSearchStore } from '@/store/search'
+import confirm from './confirm.vue'
 
 const searchStore = useSearchStore()
 const historys = computed(() => searchStore.historys)
 
 const emits = defineEmits([EMITS_ITEM_CLICK])
 
+const isShow = ref(false)
+
 /**
  * 删除所有记录
  */
 const onDeleteAllClick = () => {
+  isShow.value = true
+}
+const deleteAllConfirm = () => {
   searchStore.deleteAllHistory()
 }
-
 /**
  * 删除单个记录
  */
