@@ -63,6 +63,7 @@ watch(
 .fade-leave-to {
   opacity: 0;
 }
+
 // popup-down-up 展示动画
 .popup-down-up-enter-active {
   transition: all 0.3s;

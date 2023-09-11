@@ -48,20 +48,29 @@
       <img class="h-2 w-2 rounded-full" :src="data.avatar" alt="" />
       <span class="text-sm text-zinc-500 ml-1">{{ data.author }}</span>
     </div>
+
+    <m-message
+      :isVisable="isMessageShow"
+      type="success"
+      content="测试"
+    ></m-message>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { saveAs } from 'file-saver'
 
 import { randomRGB } from '@/utils/color.js'
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     required: true
   }
 })
+
+const isMessageShow = ref(false)
 
 /**
  * 下载按钮点击事件
@@ -70,6 +79,11 @@ const onDownload = () => {
   /**
    * 1. 下载的图片链接
    */
-  saveAs(props.data.photoDownLink)
+  saveAs(props.data.photoDownLink, props.data.author, () => {
+    isMessageShow.value = true
+    setTimeout(() => {
+      isMessageShow.value = false
+    }, 2000)
+  })
 }
 </script>

@@ -3,6 +3,7 @@
     <template #reference>
       <div
         class="guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+        v-if="false"
       >
         <!-- 头像 -->
         <img
@@ -21,6 +22,14 @@
           name="vip"
           class="w-1.5 h-1.5 absolute right-[16px] bottom-0"
         ></m-svg-icon>
+      </div>
+      <div v-else>
+        <m-button
+          class="guide-my"
+          icon="profile"
+          iconColor="#fff"
+          @click="onToLogin"
+        ></m-button>
       </div>
     </template>
 
@@ -44,6 +53,9 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 // 构建 menu 数据源
 const menuArr = [
   {
@@ -65,6 +77,10 @@ const menuArr = [
     path: ''
   }
 ]
+
+const onToLogin = () => {
+  router.push('/login')
+}
 </script>
 
 <style lang="scss" scoped></style>
