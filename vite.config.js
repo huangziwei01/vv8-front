@@ -25,19 +25,19 @@ export default defineConfig({
     proxy: {
       // 代理所有 /api 的请求，该求情将被代理到 target 中
       // 开发环境
-      '/api': {
+      '/api-dev': {
         // 代理请求之后的请求地址
         target: 'https://api.imooc-front.lgdsunday.club',
         // 跨域
         changeOrigin: true
-      },
-      // 生产环境
-      '/prod-api': {
-        // 代理请求之后的请求地址
-        target: 'https://api.imooc-front.lgdsunday.club/prod-api',
-        // 跨域
-        changeOrigin: true
       }
+      // 生产环境
+      // '/api': {
+      //   // 代理请求之后的请求地址
+      //   target: 'https://api.imooc-front.lgdsunday.club/prod-api',
+      //   // 跨域
+      //   changeOrigin: true
+      // }
     }
   }
 })

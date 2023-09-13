@@ -6,7 +6,7 @@ module.exports = (req, res) => {
 
   // 代理目标地址
   // xxxxx 替换为你跨域请求的服务器 如： http://baidu.com
-  if (req.url.startsWith('/api-prod')) {
+  if (req.url.startsWith('/api')) {
     // 这里填目标地址
     target = 'https://api.imooc-front.lgdsunday.club'
   }
@@ -17,7 +17,7 @@ module.exports = (req, res) => {
     pathRewrite: {
       // 通过路径重写，去除请求路径中的 `/api`
       // 例如 /api/user/login 将被转发到 http://target/user/login
-      '^/api-prod/': '/'
+      '^/api/': '/'
     }
   })(req, res)
 }
