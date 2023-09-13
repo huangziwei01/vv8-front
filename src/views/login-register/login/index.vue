@@ -60,6 +60,13 @@
         </m-button>
       </vee-form>
 
+      <!-- 人类行为验证模块 -->
+      <slider-captcha-vue
+        v-if="isSliderCaptchaVisible"
+        @close="isSliderCaptchaVisible = false"
+        @success="onCaptchaSuccess"
+      ></slider-captcha-vue>
+
       <!-- <div class="flex justify-around mt-4">
         <qq-login-vue></qq-login-vue>
         <wx-login-vue></wx-login-vue>
@@ -89,6 +96,8 @@ import { useUserStore } from '@/store/user'
 import { LOGIN_TYPE_USERNAME } from '@/constants'
 import { message } from '@/libs'
 
+import SliderCaptchaVue from './slider-captcha.vue'
+
 const router = useRouter()
 
 const loginForm = ref({
@@ -103,6 +112,10 @@ const loading = ref(false)
 const userStore = useUserStore()
 const onLoginHandler = () => {
   loading.value = true
+  isSliderCaptchaVisible.value = true
+}
+
+const onLogin = () => {
   try {
     userStore.login({
       ...loginForm.value,
@@ -115,6 +128,18 @@ const onLoginHandler = () => {
   } finally {
     loading.value = false
   }
+}
+
+// 控制 sliderCaptcha 展示
+const isSliderCaptchaVisible = ref(false)
+
+/**
+ * 人类行为验证通过
+ */
+const onCaptchaSuccess = async () => {
+  isSliderCaptchaVisible.value = false
+  // 登录操作
+  onLogin()
 }
 </script>
 

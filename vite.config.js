@@ -27,7 +27,7 @@ export default defineConfig({
       // 开发环境
       '/api': {
         // 代理请求之后的请求地址
-        target: 'https://api.imooc-front.lgdsunday.club/',
+        target: 'https://api.imooc-front.lgdsunday.club',
         // 跨域
         changeOrigin: true
       },
