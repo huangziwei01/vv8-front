@@ -30,14 +30,14 @@ export default defineConfig({
         target: 'https://api.imooc-front.lgdsunday.club/',
         // 跨域
         changeOrigin: true
-      }
+      },
       // 生产环境
-      // '/prod-api': {
-      //   // 代理请求之后的请求地址
-      //   target: 'https://api.imooc-front.lgdsunday.club/prod-api',
-      //   // 跨域
-      //   changeOrigin: true
-      // }
+      '/prod-api': {
+        // 代理请求之后的请求地址
+        target: 'https://api.imooc-front.lgdsunday.club/prod-api',
+        // 跨域
+        changeOrigin: true
+      }
     }
   }
 })
