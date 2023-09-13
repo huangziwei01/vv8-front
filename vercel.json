@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/proxy"
+      "source": "/api-prod/:path*",
+      "destination": "https://imooc-front.lgdsunday.club/prod-api/:path*"
     }
   ]
 }
