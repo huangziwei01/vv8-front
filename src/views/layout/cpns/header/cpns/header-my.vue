@@ -3,13 +3,13 @@
     <template #reference>
       <div
         class="guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
-        v-if="false"
+        v-if="userStore.userToken"
       >
         <!-- 头像 -->
         <img
           v-lazy
           class="w-3 h-3 rounded-sm"
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F0c%2Fef%2Fa0%2F0cefa0f17b83255217eddc20b15395f9.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651074011&t=ba5d64079381425813e4c269bcac1a1b"
+          :src="userStore.userInfo.avatar"
         />
         <!-- 下箭头 -->
         <m-svg-icon
@@ -33,27 +33,34 @@
       </div>
     </template>
 
-    <div class="w-[140px] overflow-hidden">
-      <div
-        class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
-        v-for="item in menuArr"
-        :key="item.id"
-      >
-        <m-svg-icon
-          :name="item.icon"
-          class="w-1.5 h-1.5 mr-1"
-          fillClass="fill-zinc-900 dark:fill-zinc-300"
-        ></m-svg-icon>
-        <span class="text-zinc-800 text-sm dark:text-zinc-300">{{
-          item.title
-        }}</span>
+    <template #default v-if="userStore.userToken">
+      <div class="w-[140px] overflow-hidden">
+        <div
+          class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
+          v-for="item in menuArr"
+          :key="item.id"
+          @click="onItemClick(item.path)"
+        >
+          <m-svg-icon
+            :name="item.icon"
+            class="w-1.5 h-1.5 mr-1"
+            fillClass="fill-zinc-900 dark:fill-zinc-300"
+          ></m-svg-icon>
+          <span class="text-zinc-800 dark:text-zinc-300 text-sm">{{
+            item.title
+          }}</span>
+        </div>
       </div>
-    </div>
+    </template>
   </m-popover>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { confirm } from '@/libs'
+
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
 
 const router = useRouter()
 // 构建 menu 数据源
@@ -80,6 +87,22 @@ const menuArr = [
 
 const onToLogin = () => {
   router.push('/login')
+}
+
+/**
+ * menu Item 点击事件，也可以根据其他的 key 作为判定，比如 name
+ */
+const onItemClick = (path) => {
+  // 有路径则进行路径跳转
+  if (path) {
+    router.push(path)
+    return
+  }
+  // 无路径则为退出登录
+  confirm('您确定要退出登录吗？').then(() => {
+    // 退出登录不存在跳转路径
+    userStore.logout()
+  })
 }
 </script>
 

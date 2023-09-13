@@ -1,17 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { loginUser } from '@/api/sys'
+import { loginUser, getProfile } from '@/api/sys'
 import md5 from 'md5'
 
-import { useRouter } from 'vue-router'
-const router = useRouter()
-
 export const useUserStore = defineStore('user', () => {
-  const token = ref('')
+  const userToken = ref('')
+  const userInfo = ref({})
 
-  function setToken(token) {
-    token.value = token
+  const profile = async () => {
+    const res = await getProfile()
+    userInfo.value = res
   }
 
   const login = async (payload) => {
@@ -21,13 +20,28 @@ export const useUserStore = defineStore('user', () => {
         ...payload,
         password: password ? md5(password) : ''
       })
-      router.push('/')
+      const { token } = data
+      userToken.value = token
+      console.log(userToken.value)
+      localStorage.setItem('token', token)
+      profile()
+      // const router = useRouter()
     } catch (error) {}
   }
 
+  const logout = () => {
+    userToken.value = ''
+    localStorage.removeItem('token')
+    userInfo.value = {}
+    location.reload()
+  }
+
+  const register = async (password) => {}
+
   return {
-    token,
-    setToken,
-    login
+    userToken,
+    userInfo,
+    login,
+    logout
   }
 })

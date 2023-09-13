@@ -140,7 +140,7 @@ const waitImgComplate = () => {
   let itemElements = [...document.getElementsByClassName('m-waterfall-item')]
   // 获取所有元素的 img 标签
   const imgElements = getImgElements(itemElements)
-  // 获取所有 img 标签的图片
+  // 获取所有 img 标签的图片连接
   const allImgs = getAllImg(imgElements)
   onComplateImgs(allImgs).then(() => {
     // 图片加载完成，获取高度
@@ -235,13 +235,13 @@ onUnmounted(() => {
 watch(
   () => props.data,
   (newVal) => {
-    // 重置数据源
-    const resetColumnHeight = newVal.every((item) => !item._style)
-    if (resetColumnHeight) {
-      // 构建高度记录容器
-      useColumnHeightObj()
-    }
     nextTick(() => {
+      // 重置数据源
+      const resetColumnHeight = newVal.every((item) => !item._style)
+      if (resetColumnHeight) {
+        // 构建高度记录容器
+        useColumnHeightObj()
+      }
       if (props.picturePreReading) {
         waitImgComplate()
       } else {

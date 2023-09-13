@@ -87,6 +87,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
 
 import { LOGIN_TYPE_USERNAME } from '@/constants'
+import { message } from '@/libs'
 
 const router = useRouter()
 
@@ -101,13 +102,14 @@ const loading = ref(false)
 
 const userStore = useUserStore()
 const onLoginHandler = () => {
-  console.log('触发登录')
   loading.value = true
   try {
     userStore.login({
       ...loginForm.value,
       loginType: LOGIN_TYPE_USERNAME
     })
+    router.push('/')
+    message('success', '登陆成功')
   } catch (error) {
     console.log(error)
   } finally {

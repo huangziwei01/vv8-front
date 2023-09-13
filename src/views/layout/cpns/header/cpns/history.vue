@@ -25,7 +25,7 @@
         ></m-svg-icon>
       </div>
     </div>
-    <confirm v-model="isShow" @confirm="deleteAllConfirm"></confirm>
+    <!-- <confirm v-model="isShow" @confirm="deleteAllConfirm"></confirm> -->
   </div>
 </template>
 
@@ -36,7 +36,8 @@ const EMITS_ITEM_CLICK = 'itemClick'
 <script setup>
 import { ref, computed } from 'vue'
 import { useSearchStore } from '@/store/search'
-import confirm from './confirm.vue'
+
+import { confirm } from '@/libs'
 
 const searchStore = useSearchStore()
 const historys = computed(() => searchStore.historys)
@@ -49,11 +50,13 @@ const isShow = ref(false)
  * 删除所有记录
  */
 const onDeleteAllClick = () => {
-  isShow.value = true
+  confirm('要删除所有历史记录吗？').then(() => {
+    store.commit('search/deleteAllHistory')
+  })
 }
-const deleteAllConfirm = () => {
-  searchStore.deleteAllHistory()
-}
+// const deleteAllConfirm = () => {
+//   searchStore.deleteAllHistory()
+// }
 /**
  * 删除单个记录
  */
