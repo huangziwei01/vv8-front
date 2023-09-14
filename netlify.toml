@@ -1,6 +1,0 @@
-[[redirects]]
-  from = "/api-prod/:path*"
-  to = "https://imooc-front.lgdsunday.club/prod-api/:path*"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}

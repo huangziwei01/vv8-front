@@ -51,7 +51,7 @@ const isShow = ref(false)
  */
 const onDeleteAllClick = () => {
   confirm('要删除所有历史记录吗？').then(() => {
-    store.commit('search/deleteAllHistory')
+    searchStore.deleteAllHistory()
   })
 }
 // const deleteAllConfirm = () => {

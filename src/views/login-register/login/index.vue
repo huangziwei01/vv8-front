@@ -2,10 +2,10 @@
   <div
     class="relative h-screen bg-white dark:bg-zinc-800 text-center xl:bg-zinc-200"
   >
-    <header-vue></header-vue>
+    <!-- <header-vue></header-vue> -->
     <!-- 表单区 -->
     <div
-      class="block px-3 mt-4 dark:bg-zinc-800 xl:bg-white xl:w-[388px] xl:dark:bg-zinc-900 xl:m-auto xl:mt-8 xl:py-4 xl:rounded-sm xl:shadow-lg"
+      class="block px-3 mt-4 dark:bg-zinc-800 xl:bg-white xl:w-[388px] xl:dark:bg-zinc-900 xl:m-auto xl:py-4 xl:rounded-sm xl:shadow-lg"
     >
       <h3
         class="mb-2 font-semibold text-base text-main dark:text-zinc-300 hidden xl:block"
@@ -115,7 +115,7 @@ const onLoginHandler = () => {
   isSliderCaptchaVisible.value = true
 }
 
-const onLogin = () => {
+const onLogin = async () => {
   try {
     userStore.login({
       ...loginForm.value,
