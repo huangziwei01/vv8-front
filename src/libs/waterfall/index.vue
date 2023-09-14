@@ -22,8 +22,6 @@
         <slot :item="item" :width="columnWidth" :index="index" />
       </div>
     </template>
-    <!-- 可以给一个加载中的描述，没有也无所谓 -->
-    <!-- <div v-else>加载中...</div> -->
   </div>
 </template>
 

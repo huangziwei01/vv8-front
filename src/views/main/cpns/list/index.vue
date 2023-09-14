@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 列表处理 -->
     <m-infinite-list
       v-model="isLoading"
       :isFinished="isFinished"
@@ -12,27 +13,43 @@
         class="w-full px-1"
       >
         <template v-slot="{ item, width }">
-          <itemVue :data="item" :width="width" />
+          <itemVue :data="item" :width="width" @click="onToPins" />
         </template>
       </m-waterfall>
     </m-infinite-list>
+    <!-- 大图详情处理 -->
+    <transition
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave"
+    >
+      <pins-vue v-if="isVisiblePins" :id="currentPins.id" />
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-
 import { requestPexelsList } from '@/api/pexels'
-import { isMobileTerminal } from '@/utils/flexible'
 import itemVue from './cpns/item.vue'
-import { useAppStore } from '../../../../store/app'
+import { isMobileTerminal } from '@/utils/flexible'
+// import { useStore } from 'vuex'
+import { useAppStore } from '@/store/app'
+import pinsVue from '@/views/pins/components/pins.vue'
+import gsap from 'gsap'
+import { useEventListener } from '@vueuse/core'
+
+const appStore = useAppStore()
 
 /**
  * 构建数据请求
  */
 let query = {
   page: 1,
-  size: 20
+  size: 20,
+  categoryId: '',
+  searchText: ''
 }
 // 数据是否在加载中
 const isLoading = ref(false)
@@ -40,7 +57,6 @@ const isLoading = ref(false)
 const isFinished = ref(false)
 // 数据源
 const pexelsList = ref([])
-
 /**
  * 加载数据的方法
  */
@@ -74,7 +90,6 @@ const getPexelsData = async () => {
 /**
  * 通过此方法修改 query 请求参数，重新发起请求
  */
-const appStore = useAppStore()
 const resetQuery = (newQuery) => {
   query = { ...query, ...newQuery }
   // 重置状态
@@ -109,4 +124,65 @@ watch(
     })
   }
 )
+
+// 控制 pins 展示
+const isVisiblePins = ref(false)
+// 当前选中的 pins 属性
+const currentPins = ref({})
+/**
+ * 进入 pins
+ */
+const onToPins = (item) => {
+  history.pushState(null, null, `/pins/${item.id}`)
+  currentPins.value = item
+  isVisiblePins.value = true
+}
+
+/**
+ * 监听浏览器后退按钮事件
+ */
+useEventListener(window, 'popstate', () => {
+  isVisiblePins.value = false
+})
+
+/**
+ * 进入动画开始前
+ */
+const beforeEnter = (el) => {
+  gsap.set(el, {
+    scaleX: 0,
+    scaleY: 0,
+    transformOrigin: '0 0',
+    translateX: currentPins.value.localtion?.translateX,
+    translateY: currentPins.value.localtion?.translateY,
+    opacity: 0
+  })
+}
+/**
+ * 进入动画执行中
+ */
+const enter = (el, done) => {
+  gsap.to(el, {
+    duration: 0.3,
+    scaleX: 1,
+    scaleY: 1,
+    opacity: 1,
+    translateX: 0,
+    translateY: 0,
+    onComplete: done
+  })
+}
+/**
+ * 离开动画执行中
+ */
+const leave = (el, done) => {
+  gsap.to(el, {
+    duration: 0.3,
+    scaleX: 0,
+    scaleY: 0,
+    x: currentPins.value.localtion?.translateX,
+    y: currentPins.value.localtion?.translateY,
+    opacity: 0
+  })
+}
 </script>

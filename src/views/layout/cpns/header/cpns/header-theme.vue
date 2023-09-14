@@ -47,13 +47,13 @@ const themeArr = [
     type: THEME_DARK,
     icon: 'theme-dark',
     name: '极夜黑'
-  },
-  {
-    id: '2',
-    type: THEME_SYSTEM,
-    icon: 'theme-system',
-    name: '跟随系统'
   }
+  // {
+  //   id: '2',
+  //   type: THEME_SYSTEM,
+  //   icon: 'theme-system',
+  //   name: '跟随系统'
+  // }
 ]
 
 //popover位置

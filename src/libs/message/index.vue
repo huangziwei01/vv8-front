@@ -1,27 +1,69 @@
 <template>
-  <teleport to="body">
-    <transition name="down" @after-leave="destroy">
-      <div
-        v-show="isVisable"
-        class="min-w-[420px] fixed top-[20px] left-[50%] translate-x-[-50%] z-50 flex items-center px-3 py-1.5 rounded-sm border cursor-pointer"
-        :class="styles[type].containerClass"
-      >
-        <m-svg-icon
-          :name="styles[type].icon"
-          :fillClass="styles[type].fillClass"
-          class="h-1.5 w-1.5 mr-1.5"
-        ></m-svg-icon>
-        <span class="text-sm" :class="styles[type].textClass">
-          {{ content }}
-        </span>
-      </div>
-    </transition>
-  </teleport>
+  <transition name="down" @after-leave="destroy">
+    <div
+      v-show="isVisable"
+      class="min-w-[420px] fixed top-[20px] left-[50%] translate-x-[-50%] z-50 flex items-center px-3 py-1.5 rounded-sm border cursor-pointer"
+      :class="styles[type].containerClass"
+    >
+      <m-svg-icon
+        :name="styles[type].icon"
+        :fillClass="styles[type].fillClass"
+        class="h-1.5 w-1.5 mr-1.5"
+      ></m-svg-icon>
+      <span class="text-sm" :class="styles[type].textClass">
+        {{ content }}
+      </span>
+    </div>
+  </transition>
 </template>
 
-<script></script>
+<script>
+import mSvgIcon from '../svg-icon/index.vue'
+
+/**
+ * 消息类型可选项
+ */
+const typeEnum = ['success', 'warn', 'error']
+</script>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+const props = defineProps({
+  /**
+   * message 的消息类型
+   */
+  type: {
+    type: String,
+    required: true,
+    validator(val) {
+      const result = typeEnum.includes(val)
+      if (!result) {
+        throw new Error(`你的 type 必须是 ${typeEnum.join('、')} 中的一个`)
+      }
+      return result
+    }
+  },
+  /**
+   * 描述文本
+   */
+  content: {
+    type: String,
+    required: true
+  },
+  /**
+   * 展示时长
+   */
+  duration: {
+    type: Number
+  },
+  /**
+   * 关闭时的回调
+   */
+  destroy: {
+    type: Function
+  }
+})
+
 // 样式表数据
 const styles = {
   // 警告
@@ -50,44 +92,19 @@ const styles = {
   }
 }
 
-const props = defineProps({
-  isVisable: {
-    type: Boolean,
-    default: false
-  },
+// 控制显示处理
+const isVisable = ref(false)
+/**
+ * 保证动画展示，需要在 mounted 之后进行展示
+ */
+onMounted(() => {
+  isVisable.value = true
   /**
-   * message 的消息类型
+   * 延迟时间关闭
    */
-  type: {
-    type: String,
-    required: true
-    // validator(val) {
-    //   const result = typeEnum.includes(val)
-    //   if (!result) {
-    //     throw new Error(`你的 type 必须是 ${typeEnum.join('、')} 中的一个`)
-    //   }
-    //   return result
-    // }
-  },
-  /**
-   * 描述文本
-   */
-  content: {
-    type: String,
-    required: true
-  },
-  /**
-   * 展示时长
-   */
-  duration: {
-    type: Number
-  },
-  /**
-   * 关闭时的回调
-   */
-  destroy: {
-    type: Function
-  }
+  setTimeout(() => {
+    isVisable.value = false
+  }, props.duration)
 })
 </script>
 

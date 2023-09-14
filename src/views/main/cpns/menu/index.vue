@@ -13,7 +13,6 @@
         {{ item.name }}
       </li>
     </ul>
-    111111
   </div>
 </template>
 

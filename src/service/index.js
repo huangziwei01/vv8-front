@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { useUserStore } from '@/store/user'
+import { message } from '@/libs'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -28,21 +29,22 @@ service.interceptors.response.use(
       // TODO：业务错误
       return Promise.reject(new Error(message))
     }
+  },
+  (error) => {
+    // 处理 token 超时问题
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
+      message('登录已过期请重新登录')
+      // TODO: token超时
+      const userStore = useUserStore()
+      userStore.logout()
+    }
+    // TODO: 提示错误消息
+    return Promise.reject(error)
   }
-  // (error) => {
-  //   // 处理 token 超时问题
-  //   if (
-  //     error.response &&
-  //     error.response.data &&
-  //     error.response.data.code === 401
-  //   ) {
-  //     // TODO: token超时
-  //     const userStore = useUserStore()
-  //     userStore.logout()
-  //   }
-  //   // TODO: 提示错误消息
-  //   return Promise.reject(error)
-  // }
 )
 
 export default service

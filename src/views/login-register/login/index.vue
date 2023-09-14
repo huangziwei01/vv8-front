@@ -101,11 +101,13 @@ import SliderCaptchaVue from './slider-captcha.vue'
 const router = useRouter()
 
 const loginForm = ref({
-  username: '',
-  password: ''
+  username: 'vv8test',
+  password: 'hzw20011223'
 })
 
-const onToRegister = () => {}
+const onToRegister = () => {
+  router.push('/register')
+}
 
 const loading = ref(false)
 

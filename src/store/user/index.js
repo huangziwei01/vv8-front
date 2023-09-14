@@ -5,24 +5,38 @@ import { loginUser, getProfile } from '@/api/sys'
 import md5 from 'md5'
 
 export const useUserStore = defineStore('user', () => {
-  const userToken = ref('')
-  const userInfo = ref({})
+  const localUserInfo = JSON.parse(localStorage.getItem('userInfo'))
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : {}
+  const userToken = ref(
+    localStorage.getItem('token') ? localStorage.getItem('token') : ''
+  )
+  const userInfo = ref(localUserInfo)
 
   const profile = async () => {
     const res = await getProfile()
+    console.log(res)
     userInfo.value = res
+    localStorage.setItem('userInfo', JSON.stringify(res))
   }
 
-  const login = async (payload) => {
+  const login = async (payload, isRegister = false) => {
     try {
       const { password } = payload
+      // if (isRegister) {
+      //   const data = await loginUser(payload)
+      // } else {
+      //   const data = await loginUser({
+      //     ...payload,
+      //     password: password ? md5(password) : ''
+      //   })
+      // }
       const data = await loginUser({
         ...payload,
         password: password ? md5(password) : ''
       })
       const { token } = data
       userToken.value = token
-      console.log(userToken.value)
       localStorage.setItem('token', token)
       profile()
       // const router = useRouter()
@@ -32,11 +46,14 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     userToken.value = ''
     localStorage.removeItem('token')
+    localStorage.removeItem('userInfo')
     userInfo.value = {}
     location.reload()
   }
 
-  const register = async (password) => {}
+  // const register = async (payload) => {
+  //   const { password } = payload
+  // }
 
   return {
     userToken,

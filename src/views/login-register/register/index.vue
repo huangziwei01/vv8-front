@@ -3,10 +3,10 @@
     class="relative h-screen bg-white dark:bg-zinc-800 text-center xl:bg-zinc-200"
   >
     <!-- 头部图标 -->
-    <header-vue></header-vue>
+    <!-- <header-vue></header-vue> -->
     <!-- 表单区 -->
     <div
-      class="block px-3 mt-4 dark:bg-zinc-800 xl:bg-white xl:w-[388px] xl:dark:bg-zinc-900 xl:m-auto xl:mt-8 xl:py-4 xl:rounded-sm xl:shadow-lg"
+      class="block px-3 mt-4 dark:bg-zinc-800 xl:bg-white xl:w-[388px] xl:dark:bg-zinc-900 xl:m-auto xl:py-4 xl:rounded-sm xl:shadow-lg"
     >
       <h3
         class="mb-2 font-semibold text-base text-main dark:text-zinc-300 hidden xl:block"
@@ -14,7 +14,7 @@
         注册账号
       </h3>
       <!-- 表单 -->
-      <vee-form>
+      <vee-form @submit="onRegister">
         <!-- 用户名 -->
         <vee-field
           class="dark:bg-zinc-800 dark:text-zinc-400 border-b-zinc-400 border-b-[1px] w-full outline-0 pb-1 px-1 text-base focus:border-b-main dark:focus:border-b-zinc-200 xl:dark:bg-zinc-900"
@@ -23,6 +23,7 @@
           placeholder="用户名"
           autocomplete="on"
           :rules="validateUsername"
+          v-model="regForm.username"
         />
         <vee-error-message
           class="text-sm text-red-600 block mt-0.5 text-left"
@@ -37,6 +38,7 @@
           placeholder="密码"
           autocomplete="on"
           :rules="validatePassword"
+          v-model="regForm.password"
         />
         <vee-error-message
           class="text-sm text-red-600 block mt-0.5 text-left"
@@ -51,6 +53,7 @@
           placeholder="确认密码"
           autocomplete="on"
           rules="validateConfirmPassword:@password"
+          v-model="regForm.confirmPassword"
         />
         <vee-error-message
           class="text-sm text-red-600 block mt-0.5 text-left"
@@ -91,7 +94,10 @@
 </template>
 
 <script setup>
-import headerVue from '../components/header.vue'
+import { ref } from 'vue'
+import { registerUser } from '@/api/sys.js'
+import { useRouter, useRoute } from 'vue-router'
+
 import {
   Form as VeeForm,
   Field as VeeField,
@@ -99,5 +105,56 @@ import {
   defineRule
 } from 'vee-validate'
 
+import {
+  validateUsername,
+  validatePassword,
+  validateConfirmPassword
+} from '../validate'
+
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
+const router = useRouter()
+const route = useRoute()
+
 defineRule('validateConfirmPassword', validateConfirmPassword)
+
+/**
+ * 进入登录页面
+ */
+const onToLogin = () => {
+  // 配置跳转方式
+  // store.commit('app/changeRouterType', 'push')
+  router.push('/login')
+}
+
+// 数据源
+const regForm = ref({
+  username: '',
+  password: '',
+  confirmPassword: ''
+})
+// loading
+const loading = ref(false)
+
+const onRegister = async () => {
+  try {
+    loading.value = true
+    const payload = {
+      username: regForm.value.username,
+      password: regForm.value.password
+    }
+    // 触发注册，携带第三方数据
+    const res = await registerUser({
+      ...payload,
+      ...route.query
+    })
+    // 注册成功，触发登录
+    userStore.login({
+      ...payload
+    })
+  } finally {
+    loading.value = false
+  }
+}
 </script>

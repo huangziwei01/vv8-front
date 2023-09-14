@@ -71,12 +71,12 @@ const menuArr = [
     icon: 'profile',
     path: '/profile'
   },
-  {
-    id: 1,
-    title: '升级 VIP',
-    icon: 'vip-profile',
-    path: '/member'
-  },
+  // {
+  //   id: 1,
+  //   title: '升级 VIP',
+  //   icon: 'vip-profile',
+  //   path: '/member'
+  // },
   {
     id: 2,
     title: '退出登录',
