@@ -51,7 +51,7 @@ import 'cropperjs/dist/cropper.css'
 import { ref, onMounted } from 'vue'
 import { getOSSClient } from '@/utils/sts'
 import { message } from '@/libs'
-import { useStore } from 'vuex'
+// import { useStore } from 'vuex'
 import { putProfile } from '@/api/sys'
 
 defineProps({
@@ -98,7 +98,7 @@ const onConfirmClick = () => {
  * 进行 OSS 上传
  */
 let ossClient = null
-let store = useStore()
+// let store = useStore()
 const putObjectToOSS = async (file) => {
   if (!ossClient) {
     ossClient = await getOSSClient()

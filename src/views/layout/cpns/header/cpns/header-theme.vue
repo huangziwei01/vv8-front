@@ -70,7 +70,6 @@ const onItemClick = (item) => {
 }
 
 // 控制图标展示
-console.log(themeStore.themeType)
 const svgIconName = computed(() => {
   // 根据当前的 themeType 返回当前的选中 icon
   const findTheme = themeArr.find((theme) => {

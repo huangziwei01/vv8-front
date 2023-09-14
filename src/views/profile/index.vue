@@ -27,7 +27,7 @@
           >
             <img
               v-lazy
-              :src="$store.getters.userInfo.avatar"
+              :src="userStore.userInfo.avatar"
               alt=""
               class="rounded-[50%] w-full h-full xl:inline-block"
             />
@@ -164,11 +164,12 @@ import { isMobileTerminal } from '@/utils/flexible'
 import { putProfile } from '@/api/sys'
 import { message, confirm } from '@/libs'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+// import { useStore } from 'vuex'
+import { useUserStore } from '@/store/user'
 import { ref, watch } from 'vue'
 import changeAvatarVue from './components/change-avatar.vue'
 
-const store = useStore()
+const userStore = useUserStore()
 const router = useRouter()
 
 // 隐藏域
@@ -211,10 +212,10 @@ watch(isDialogVisible, (val) => {
 /**
  * 数据本地的双向同步，增加一个单层深拷贝
  */
-const userInfo = ref({ ...store.getters.userInfo })
+const userInfo = ref({ ...userStore.userInfo })
 // const changeStoreUserInfo = (key, value) => {
 //   store.commit('user/setUserInfo', {
-//     ...store.getters.userInfo,
+//     ...userStore.userInfo,
 //     [key]: value
 //   })
 // }
@@ -228,7 +229,9 @@ const onChangeProfile = async () => {
   await putProfile(userInfo.value)
   message('success', '用户信息修改成功')
   // 更新 vuex
-  store.commit('user/setUserInfo', userInfo.value)
+  // store.commit('user/setUserInfo', userInfo.value)
+  userStore.userInfo = { ...userInfo.value }
+  localStorage.setItem('userInfo', JSON.stringify(userStore.userInfo))
   loading.value = false
 }
 
@@ -237,7 +240,7 @@ const onChangeProfile = async () => {
  */
 const onNavbarLeftClick = () => {
   // 配置跳转方式
-  store.commit('app/changeRouterType', 'back')
+  // store.commit('app/changeRouterType', 'back')
   router.back()
 }
 
@@ -246,7 +249,8 @@ const onNavbarLeftClick = () => {
  */
 const onLogoutClick = () => {
   confirm('确定要退出登录吗？').then(() => {
-    store.dispatch('user/logout')
+    // store.dispatch('user/logout')
+    userStore.logout()
   })
 }
 </script>
