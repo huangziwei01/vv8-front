@@ -123,7 +123,6 @@ watch(isVisable, (val) => {
   }
   // 等待渲染成功之后
   nextTick(() => {
-    console.log('next')
     switch (props.placement) {
       // 左上
       case PROP_TOP_LEFT:

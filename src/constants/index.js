@@ -49,7 +49,7 @@ export const REGION = 'oss-cn-beijing'
 export const BUCKET = 'imooc-front'
 
 // 兔小巢反馈地址
-export const FEEDBACK_URL = 'https://support.qq.com/product/383681'
+export const FEEDBACK_URL = 'https://txc.qq.com/products/608691'
 
 // 微博APP Key
 export const WEI_BO_APP_KEY = '3454329089'

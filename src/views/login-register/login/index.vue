@@ -63,7 +63,7 @@
       <!-- 人类行为验证模块 -->
       <slider-captcha-vue
         v-if="isSliderCaptchaVisible"
-        @close="isSliderCaptchaVisible = false"
+        @close="onCaptchaClose"
         @success="onCaptchaSuccess"
       ></slider-captcha-vue>
 
@@ -139,6 +139,12 @@ const isSliderCaptchaVisible = ref(false)
  * 人类行为验证通过
  */
 const onCaptchaSuccess = async () => {
+  isSliderCaptchaVisible.value = false
+  // 登录操作
+  onLogin()
+}
+
+const onCaptchaClose = async () => {
   isSliderCaptchaVisible.value = false
   // 登录操作
   onLogin()
