@@ -52,6 +52,7 @@ import { ref, onMounted } from 'vue'
 import { getOSSClient } from '@/utils/sts'
 import { message } from '@/libs'
 // import { useStore } from 'vuex'
+import { useUserStore } from '@/store/user'
 import { putProfile } from '@/api/sys'
 
 defineProps({
@@ -61,7 +62,8 @@ defineProps({
   }
 })
 
-const emits = defineEmits([EMITS_CLOSE])
+const emits = defineEmits([EMITS_CLOSE], 'changeUserInfo')
+const userStore = useUserStore()
 
 /**
  * 图片裁剪处理
@@ -106,7 +108,7 @@ const putObjectToOSS = async (file) => {
   try {
     // 因为当前凭证只具备 images 文件夹下的访问权限，所以图片需要上传到 images/xxx.xx 。否则你将得到一个 《AccessDeniedError: You have no right to access this object because of bucket acl.》 的错误
     const fileTypeArr = file.type.split('/')
-    const fileName = `${store.getters.userInfo.username}/${Date.now()}.${
+    const fileName = `${userStore.userInfo.username}/${Date.now()}.${
       fileTypeArr[fileTypeArr.length - 1]
     }`
     // 文件存放路径，文件
@@ -123,12 +125,18 @@ const putObjectToOSS = async (file) => {
  */
 const onChangeProfile = async (avatar) => {
   // 更新本地数据
-  store.commit('user/setUserInfo', {
-    ...store.getters.userInfo,
-    avatar
-  })
+  // store.commit('user/setUserInfo', {
+  //   ...store.getters.userInfo,
+  //   avatar
+  // })
+  localStorage.setItem(
+    'userInfo',
+    JSON.stringify({ ...userStore.userInfo, avatar })
+  )
+  userStore.userInfo = { ...userStore.userInfo, avatar }
   // 更新服务器数据
-  await putProfile(store.getters.userInfo)
+  await putProfile(userStore.userInfo)
+  userStore.profile()
   // 通知用户
   message('success', '用户头像修改成功')
   // 关闭 loading

@@ -166,7 +166,7 @@ import { message, confirm } from '@/libs'
 import { useRouter } from 'vue-router'
 // import { useStore } from 'vuex'
 import { useUserStore } from '@/store/user'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import changeAvatarVue from './components/change-avatar.vue'
 
 const userStore = useUserStore()
@@ -212,7 +212,7 @@ watch(isDialogVisible, (val) => {
 /**
  * 数据本地的双向同步，增加一个单层深拷贝
  */
-const userInfo = ref({ ...userStore.userInfo })
+const userInfo = computed(() => userStore.userInfo)
 // const changeStoreUserInfo = (key, value) => {
 //   store.commit('user/setUserInfo', {
 //     ...userStore.userInfo,
@@ -230,8 +230,8 @@ const onChangeProfile = async () => {
   message('success', '用户信息修改成功')
   // 更新 vuex
   // store.commit('user/setUserInfo', userInfo.value)
-  userStore.userInfo = { ...userInfo.value }
   localStorage.setItem('userInfo', JSON.stringify(userStore.userInfo))
+  userStore.userInfo = { ...userInfo.value }
   loading.value = false
 }
 
@@ -252,6 +252,10 @@ const onLogoutClick = () => {
     // store.dispatch('user/logout')
     userStore.logout()
   })
+}
+
+const changeUserInfo = () => {
+  userInfo.value = JSON.parse(localStorage.getItem('userInfo'))
 }
 </script>
 
