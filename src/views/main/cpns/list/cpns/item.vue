@@ -159,7 +159,7 @@ const onDownload = () => {
 const onShareClick = () => {
   weiboShare(
     props.data.photo,
-    `https://imooc-front.lgdsunday.club/pins/${props.data.id}`
+    `https://vv8-front.huangziwei01.top/${props.data.id}`
   )
 }
 </script>

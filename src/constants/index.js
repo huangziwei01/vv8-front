@@ -52,6 +52,6 @@ export const BUCKET = 'imooc-front'
 export const FEEDBACK_URL = 'https://txc.qq.com/products/608691'
 
 // 微博APP Key
-export const WEI_BO_APP_KEY = '3454329089'
+export const WEI_BO_APP_KEY = '1990076554'
 // 微博用户的 UID
-export const WEI_BO_UID = '5984245953'
+export const WEI_BO_UID = '1990076554'
