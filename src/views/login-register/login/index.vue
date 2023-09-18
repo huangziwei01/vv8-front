@@ -84,7 +84,7 @@ import {
 } from 'vee-validate'
 
 import headerVue from './header.vue'
-// import qqLoginVue from './qq-login.vue'
+import qqLoginVue from './qq-login.vue'
 // import wxLoginVue from './weixin-login.vue'
 
 import { validateUsername, validatePassword } from '../validate'
