@@ -69,7 +69,7 @@ import { saveAs } from 'file-saver'
 import { message } from '@/libs'
 import { useFullscreen, useElementBounding } from '@vueuse/core'
 import { ref, computed } from 'vue'
-// import { weiboShare } from '@/utils/share'
+import { weiboShare } from '@/utils/share'
 
 const props = defineProps({
   data: {
@@ -157,9 +157,9 @@ const onDownload = () => {
  * 分享按钮点击处理
  */
 const onShareClick = () => {
-  // weiboShare(
-  //   props.data.photo,
-  //   `https://imooc-front.lgdsunday.club/pins/${props.data.id}`
-  // )
+  weiboShare(
+    props.data.photo,
+    `https://imooc-front.lgdsunday.club/pins/${props.data.id}`
+  )
 }
 </script>
