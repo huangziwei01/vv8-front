@@ -2,7 +2,7 @@
   <m-popover class="flex items-center" placement="bottom-left">
     <template #reference>
       <div
-        class="guide-my relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+        class="guide-my z-20 relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
         v-if="userStore.userToken"
       >
         <!-- 头像 -->
@@ -106,4 +106,10 @@ const onItemClick = (path) => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div#driver-highlighted-element-stage,
+div#driver-page-overlay {
+  background: transparent !important;
+  outline: 5100px solid rgba(0, 0, 0, 0.75);
+}
+</style>
