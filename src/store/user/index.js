@@ -20,21 +20,16 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('userInfo', JSON.stringify(res))
   }
 
-  const login = async (payload, isRegister = false) => {
+  const login = async (payload) => {
     try {
       const { password } = payload
-      // if (isRegister) {
-      //   const data = await loginUser(payload)
-      // } else {
-      //   const data = await loginUser({
-      //     ...payload,
-      //     password: password ? md5(password) : ''
-      //   })
-      // }
       const data = await loginUser({
         ...payload,
         password: password ? md5(password) : ''
       })
+      if (data.code === 204) {
+        return data.code
+      }
       const { token } = data
       userToken.value = token
       localStorage.setItem('token', token)
