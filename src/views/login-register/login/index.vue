@@ -67,9 +67,9 @@
         @success="onCaptchaSuccess"
       ></slider-captcha-vue>
 
-      <div class="flex justify-around mt-4">
+      <!-- <div class="flex justify-around mt-4">
         <qq-login-vue></qq-login-vue>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -107,9 +107,9 @@ const onItemClick = (path) => {
 </script>
 
 <style lang="scss" scoped>
-div#driver-highlighted-element-stage,
+/* div#driver-highlighted-element-stage,
 div#driver-page-overlay {
   background: transparent !important;
   outline: 5100px solid rgba(0, 0, 0, 0.75);
-}
+} */
 </style>

@@ -17,15 +17,6 @@
       >
         首页
       </m-trigger-menu-item>
-      <!-- <m-trigger-menu-item
-        v-if="userStore.userToken"
-        icon="vip"
-        iconClass="fill-zinc-400 dark:fill-zinc-500"
-        textClass="text-zinc-400 dark:text-zinc-500"
-        @click="onVipClick"
-      >
-        VIP
-      </m-trigger-menu-item> -->
       <m-trigger-menu-item
         icon="profile"
         iconClass="fill-zinc-400 dark:fill-zinc-500"
